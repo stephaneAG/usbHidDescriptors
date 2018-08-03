@@ -54,7 +54,8 @@ some of the available "values" constants
 0x01 // Pointer
 0x02 // Mouse
 0x30 // X
-0x 31 // Y
+0x31 // Y
+0x38 // Wheel
 ```
 
 ### 0xa1 / COLLECTION
@@ -67,7 +68,22 @@ some of the available "values" constants
 ### 0x81 / INPUT
 some of the available "values" constants
 ```
-0x02 // (Data,Variable,Absolute)
-0x03 // (Constant,Variable,Absolute)
-0x06 // (Data,Variable,Relative)
+0x02 // (Data,Variable,Absolute) 0b10
+0x03 // (Constant,Variable,Absolute) 0b11
+0x06 // (Data,Variable,Relative) 0b110
 ```
+
+from HID1_11.pdf
+
+| Bit      | Meaning                                  |
+| -------- | ---------------------------------------- |
+| Bit 0    | {Data (0) \| Constant (1)}               | 
+| Bit 1    | {Array (0) | Variable (1)}               |
+| Bit 2    | {Absolute (0) | Relative (1)}            |
+| Bit 3    | {No Wrap (0) | Wrap (1)}                 |
+| Bit 4    | {Linear (0) | Non Linear (1)}            |
+| Bit 5    | {Preferred State (0) | No Preferred (1)} |
+| Bit 6    | {No Null position (0) | Null state(1)}   |
+| Bit 7    | Reserved (0)                             |
+| Bit 8    | {Bit Field (0) | Buffered Bytes (1)}     |
+| Bit 31-9 | Reserved (0)                             |
