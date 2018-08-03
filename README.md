@@ -7,6 +7,9 @@ Repo focusing on making USB HID Report Descriptors make sense
 - https://eleccelerator.com/tutorial-about-usb-hid-report-descriptors/ very neat tut' !
 - https://eleccelerator.com/usbdescreqparser/ unvaluable tool => parses HID report descriptors !!
 
+## wip custom tool to ease the generation
+- https://jsbin.com/riligusece/1/edit?js,console
+
 ## quick reminder of some of the constants used as "keys"
 ```
 0x05 // USAGE_PAGE
