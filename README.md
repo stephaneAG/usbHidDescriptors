@@ -4,8 +4,8 @@ Repo focusing on making USB HID Report Descriptors make sense
 ## Kinda useful links
 - http://www.usb.org/developers/hidpage/HID1_11.pdf Device Class Definition for HID
 - http://www.usb.org/developers/hidpage/Hut1_12v2.pdf HID Usage Tables
-- https://eleccelerator.com/tutorial-about-usb-hid-report-descriptors/ very neat tut'
-
+- https://eleccelerator.com/tutorial-about-usb-hid-report-descriptors/ very neat tut' !
+- https://eleccelerator.com/usbdescreqparser/ unvaluable tool => parses HID report descriptors !!
 
 ## quick reminder of some of the constants used as "keys"
 ```
@@ -68,7 +68,8 @@ some of the available "values" constants
 ### 0x81 / INPUT
 some of the available "values" constants
 ```
-0x02 // (Data,Variable,Absolute) 0b10
+0x01 // (Data) 0b1
+0x02 // (Data,Variable,Absolute) 0b10 ( for completeness: (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) )
 0x03 // (Constant,Variable,Absolute) 0b11
 0x06 // (Data,Variable,Relative) 0b110
 ```
