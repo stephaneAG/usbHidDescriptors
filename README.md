@@ -8,7 +8,8 @@ Repo focusing on making USB HID Report Descriptors make sense
 - https://eleccelerator.com/usbdescreqparser/ unvaluable tool => parses HID report descriptors !!
 
 ## wip custom tool to ease the generation
-- https://jsbin.com/riligusece/1/edit?js,console
+- https://jsbin.com/riligusece/1/edit?js,console -> old version mess ..
+- https://jsbin.com/vezimibano/1/edit?js,console -> updated version
 
 ## quick reminder of some of the constants used as "keys"
 ```
