@@ -83,12 +83,12 @@ from HID1_11.pdf
 | Bit      | Meaning                                  |
 | -------- | ---------------------------------------- |
 | Bit 0    | {Data (0) \| Constant (1)}               | 
-| Bit 1    | {Array (0) | Variable (1)}               |
-| Bit 2    | {Absolute (0) | Relative (1)}            |
-| Bit 3    | {No Wrap (0) | Wrap (1)}                 |
-| Bit 4    | {Linear (0) | Non Linear (1)}            |
-| Bit 5    | {Preferred State (0) | No Preferred (1)} |
-| Bit 6    | {No Null position (0) | Null state(1)}   |
+| Bit 1    | {Array (0) \| Variable (1)}               |
+| Bit 2    | {Absolute (0) \| Relative (1)}            |
+| Bit 3    | {No Wrap (0) \| Wrap (1)}                 |
+| Bit 4    | {Linear (0) \| Non Linear (1)}            |
+| Bit 5    | {Preferred State (0) \| No Preferred (1)} |
+| Bit 6    | {No Null position (0) \| Null state(1)}   |
 | Bit 7    | Reserved (0)                             |
-| Bit 8    | {Bit Field (0) | Buffered Bytes (1)}     |
+| Bit 8    | {Bit Field (0) \| Buffered Bytes (1)}     |
 | Bit 31-9 | Reserved (0)                             |
