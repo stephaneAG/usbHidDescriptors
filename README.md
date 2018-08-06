@@ -10,6 +10,7 @@ Repo focusing on making USB HID Report Descriptors make sense
 ## wip custom tool to ease the generation
 - https://jsbin.com/riligusece/1/edit?js,console -> old version mess ..
 - https://jsbin.com/vezimibano/1/edit?js,console -> updated version
+- https://jsbin.com/nuzifawogu/1/edit?js,console -> updated version with wip "0x81 / INPUT" flags parser that generates stuff
 
 ## quick reminder of some of the constants used as "keys"
 ```
