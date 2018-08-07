@@ -11,7 +11,7 @@ Repo focusing on making USB HID Report Descriptors make sense
 - https://jsbin.com/riligusece/1/edit?js,console -> old version mess ..
 - https://jsbin.com/vezimibano/1/edit?js,console -> updated version
 - https://jsbin.com/nuzifawogu/1/edit?js,console -> updated version with wip "0x81 / INPUT" flags parser that generates stuff
-- https://jsbin.com/hubukewafa/1/edit?js,console -> latest version ;)
+- https://jsbin.com/nonarotoji/1/edit?js,console -> latest version ;)
 
 Usage:
 ```javascript
@@ -41,8 +41,8 @@ var reportDescriptorProto = [
       { REPORT_SIZE: 8 },
       { REPORT_COUNT: 2 },
       { INPUT: 'Data,Variable,Relative' },
-    { END_COLLECTION: undefined },
-  { END_COLLECTION: undefined },
+    { END_COLLECTION: null },
+  { END_COLLECTION: null },
 ];
 
 // generate the hexs from the above
