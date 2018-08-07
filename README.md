@@ -11,6 +11,49 @@ Repo focusing on making USB HID Report Descriptors make sense
 - https://jsbin.com/riligusece/1/edit?js,console -> old version mess ..
 - https://jsbin.com/vezimibano/1/edit?js,console -> updated version
 - https://jsbin.com/nuzifawogu/1/edit?js,console -> updated version with wip "0x81 / INPUT" flags parser that generates stuff
+- https://jsbin.com/hubukewafa/1/edit?js,console -> latest version ;)
+
+Usage:
+```javascript
+// define our usb hid report descriptor using consts or specifying custom values for fields supporing those
+var reportDescriptorProto = [
+  { USAGE_PAGE: 'Generic Desktop' },
+  { USAGE: 'Mouse' },
+  { COLLECTION: 'Application' },
+    { USAGE: 'Pointer' },
+    { COLLECTION: 'Physical' },
+      { USAGE_PAGE: 'Button' },
+      { USAGE_MINIMUM: 1 },
+      { USAGE_MAXIMUM: 3 },
+      { LOGICAL_MINIMUM: 0 },
+      { LOGICAL_MAXIMUM: 1 },
+      { REPORT_COUNT: 3 },
+      { REPORT_SIZE: 1 },
+      { INPUT: 'Data,Variable,Absolute' },
+      { REPORT_COUNT: 1 },
+      { REPORT_SIZE: 5 },
+      { INPUT: 'Constant,Variable,Absolute', },
+      { USAGE_PAGE: 'Generic Desktop' },
+      { USAGE: 'X' },
+      { USAGE: 'Y' },
+      { LOGICAL_MINIMUM: -127 },
+      { LOGICAL_MAXIMUM: 127 },
+      { REPORT_SIZE: 8 },
+      { REPORT_COUNT: 2 },
+      { INPUT: 'Data,Variable,Relative' },
+    { END_COLLECTION: undefined },
+  { END_COLLECTION: undefined },
+];
+
+// generate the hexs from the above
+var generatedDescriptor = genReportDescriptor(reportDescriptorProto);
+console.log(generatedDescriptor);
+
+// result ( make sure it's ok by drag& dropping in https://eleccelerator.com/usbdescreqparser/ ;p )
+/*
+["0x05", "0x01", "0x09", "0x02", "0xa1", "0x01", "0x09", "0x01", "0xa1", "0x00", "0x05", "0x09", "0x19", "0x01", "0x29", "0x03", "0x15", "0x00", "0x25", "0x01", "0x95", "0x03", "0x75", "0x01", "0x81", "0x2", "0x95", "0x01", "0x75", "0x05", "0x81", "0x3", "0x05", "0x01", "0x09", "0x30", "0x09", "0x31", "0x15", "0x81", "0x25", "0x7f", "0x75", "0x08", "0x95", "0x02", "0x81", "0x6", "0xc0", "0xc0"]
+*/
+```
 
 ## quick reminder of some of the constants used as "keys"
 ```
