@@ -73,5 +73,5 @@ exports.BUTTONS = {
 exports.send = function(x,y,b) {
   E.sendUSBHID([b&7,x,y,0]);
   // Q1: why ensure b is only 3 bits since middle button "biggest" value is 0b100 ?
-  // Q2: why the last byte ?
+  // Q2: why the last byte ? wheel ?
 };
