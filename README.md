@@ -82,7 +82,7 @@ some of the available "values" constants
 0x02 // SIMULATION CONTROLS page
 0x03 // VR CONTROLS page
 0x04 // SPORTS CONTROLS page
-0x05 // GAMES CONTROLS page
+0x05 // GAMES CONTROLS page - Hut1_12v2 p48
 0x06 // GENERIC DEVICE CONTROLS page
 0x07 // KEYBOARD/KEYPAD CONTROLS page
 0x08 // LED page
@@ -96,11 +96,16 @@ some of the available "values" constants
 0x40 // MEDICAL INSTRUMENT page
 ```
 
-### 0x09 / USAGE
+### 0x09 / USAGE ( Hut1_12v2.pdf page 26 )
 some of the available "values" constants
 ```
 0x01 // Pointer
 0x02 // Mouse
+0x04 // Joystick - example descriptor on p74 of HID1_11 
+0x05 // Gamepad - Hut1_12v2 p51
+0x06 // Keyboard
+0x07 // Keypad
+0x08 // Multi-axis Controller
 0x30 // X
 0x31 // Y
 0x38 // Wheel
