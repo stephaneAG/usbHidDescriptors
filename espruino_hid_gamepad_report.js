@@ -1,74 +1,136 @@
-/* Copyright (c) 2018 Stephane Adam Garnier, SeedsDesign. See the file LICENSE for copying permission. */
+/* Copyright (c) 2018 Stephane Adam Garnier, SeedsDesign. See the file LICENSE for copying permission. 
+
+    R: this module is in huge wip ( it 'll soon include a wrapper to ease pressing/releasing btns & moving joysticks .. )
+
+*/
 /* 
 ```
 var gamepad = require("USBGamepad");
+
 setWatch(function() {
-  mouse.send(20,20,mouse.BUTTONS.NONE); // X movement, Y movement, buttons pressed
+  gamepad.sendGamepadState({buttonsByte: , ljoyX: [, ..]}, function(){
+    // ..
+  });
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
+// or
+setInterval(function(){
+  if(btnState != lastBtnState || lastX1 != x1 || lastY1 != y1 || lastX2 != x2 || lastY2 != y2){
+    gamepad.sendGamepadState(btnState, );
+  }
+}, 200);
+
 ```
+*/
+/*
+
+R: default for 'USAGE(Gamepad)' is one joystick & 3 buttons
+   instead, we want 2 joysticks & 16 buttons
+
+      | Bit7   | Bit6   | Bit5   | Bit4   | Bit3   | Bit2   | Bit1   | Bit0   |
+Byte0 | Button | Button | Button | Button | Button | Button | Button | Button |
+Byte1 | Button | Button | Button | Button | Button | Button | Button | Button |
+Byte2 | L X-axis ( signed int )                                               |
+Byte3 | L Y-axis ( signed int )                                               |
+Byte4 | R X-axis ( signed int )                                               |
+Byte5 | L Y-axis ( signed int )                                               |
+
+// gamepad_report_t
+var buttons = 0b00000000 00000000; // uint16_t
+var lx = 0b00000000;              // int8_t
+var ly = 0b00000000;              // int8_t
+var rx = 0b00000000;              // int8_t
+var ry = 0b00000000;              // int8_t
+
 */
 
 E.setUSBHID({
   reportDescriptor : [
   0x05,   0x01,                    // USAGE_PAGE (Generic Desktop)
-  0x09,   0x02,                    // USAGE (Mouse)
+  0x09,   0x05,                    // USAGE (Game Pad) - Hut1_12v2.pdf p28 of 128
   0xA1,   0x01,                    // COLLECTION (Application)
   0x09,   0x01,                    //   USAGE (Pointer)
 
   0xA1,   0x00,                    //   COLLECTION (Physical)
   0x05,   0x09,                    //     USAGE_PAGE (Button)
   0x19,   0x01,                    //     USAGE_MINIMUM (Button 1)
-  0x29,   0x03,                    //     USAGE_MAXIMUM (Button 3)
+  0x29,   0x10,                    //     USAGE_MAXIMUM (Button 16)
 
   0x15,   0x00,                    //     LOGICAL_MINIMUM (0)
   0x25,   0x01,                    //     LOGICAL_MAXIMUM (1)
-  0x95,   0x03,                    //     REPORT_COUNT (3)
+  0x95,   0x10,                    //     REPORT_COUNT (16)
   0x75,   0x01,                    //     REPORT_SIZE (1)
 
   0x81,   0x02,                    //     INPUT (Data,Var,Abs)
-  0x95,   0x01,                    //     REPORT_COUNT (1)
-  0x75,   0x05,                    //     REPORT_SIZE (5)
-  0x81,   0x01,             // DIF //     INPUT (Data)
 
   0x05,   0x01,                    //     USAGE_PAGE (Generic Desktop)
   0x09,   0x30,                    //     USAGE (X)
   0x09,   0x31,                    //     USAGE (Y)
-  0x09,   0x38,             // NEW //     USAGE (Wheel)
-
+  0x09,   0x32,                    //     USAGE (Z) - Hut1_12v2.pdf p26 = represents R X-axis
+  0x09,   0x33,                    //     USAGE (Rx) - Hut1_12v2.pdf p26 = represents R Y-axis
+    
   0x15,   0x81,                    //     LOGICAL_MINIMUM (-127)
   0x25,   0x7F,                    //     LOGICAL_MAXIMUM (127)
   0x75,   0x08,                    //     REPORT_SIZE (8)
-  0x95,   0x03,             // DIF //     REPORT_COUNT (3)
+  0x95,   0x04,                    //     REPORT_COUNT (4)
 
-  0x81,   0x06,                    //     INPUT (Data,Var,Rel)
+  0x81,   0x06,                    //     INPUT (Data,Var,Abs) - absolute for joysticks ( != rel for mouse )
   0xC0,                            //   END_COLLECTION
-  
-  0x09,   0x3c,             // NEW //   USAGE (Motion Wakeup)
-  0x05,   0xff,             // NEW //   USAGE_PAGE (Reserved 0xFF)
-  0x09,   0x01,             // NEW //   USAGE (0x01)
-  0x15,   0x00,             // NEW //   LOGICAL_MINIMUM (0)
-  
-  0x25,   0x01,             // NEW //   LOGICAL_MAXIMUM (1)
-  0x75,   0x01,             // NEW //   REPORT_SIZE (1)
-  0x95,   0x02,             // NEW //   REPORT_COUNT(2)
-  
-  0xb1,   0x22,             // NEW //   FEATURE (Data,Var,Abs,No Wrap,Linear,No Preferred State,No Null Position,Non-volatile)
-  0x75,   0x06,             // NEW //   REPORT_SIZE (6)
-  0x95,   0x01,             // NEW //   REPORT_COUNT(1)
-  0xb1,   0x01,             // NEW //   FEATURE (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
   
   0xc0 ]                           // END_COLLECTION
 });
 
+
 exports.BUTTONS = {
-  NONE : 0,  // 0b000
-  LEFT : 1,  // 0b001
-  RIGHT : 2, // 0b010
-  MIDDLE : 4 // 0b100
+  START:      0x0001, // 
+  SELECT:     0x0002, // 
+  
+  PAD_UP:     0x0004, // 
+  PAD_DOWN:   0x0008, //
+  PAD_LEFT:   0x0010, //
+  PAD_RIGHT:  0x0020, //
+  
+  Y:          0x0040, //
+  YELLOW:     0x0040, //
+  A:          0x0080, //
+  GREEN:      0x0080, //
+  X:          0x0100, //
+  BLUE:       0x0100, //
+  B:          0x0200, //
+  RED:        0x0200, //
+  
+  L1:         0x0400, //
+  R1:         0x0800, //
+  
+  L2:         0x1000, //
+  R2:         0x2000, //
+  
+  L3:         0x4000, //
+  R3:         0x8000, //
 };
 
-exports.send = function(x,y,b) {
-  E.sendUSBHID([b&7,x,y,0]);
-  // Q1: why ensure b is only 3 bits since middle button "biggest" value is 0b100 ?
-  // Q2: why the last byte ? wheel ?
+/*
+var lastBtnState = 0;
+var lastX1 = 0;
+var lastY1 = 0;
+var lastX2 = 0;
+var lastY2 = 0;
+
+var btnState = 0;
+var x1 = 0;
+var y1 = 0;
+var x2 = 0;
+var y2 = 0;
+*/
+
+exports.sendGamepadState = function(btnState, x1, y1, x2, y2){
+  E.sendUSBHID([
+    //0x06,                 // bLength
+    //0x01,                 // bDescriptorType - constant ( String assigned by USB )
+    btnState & 0xFF,      // Byte0
+    (btnState>>8) & 0xFF, // Byte1   
+    x1,                   // Byte2
+    y1,                   // Byte3
+    x2,                   // Byte4
+    y2,                   // Byte5
+  ]);
 };
