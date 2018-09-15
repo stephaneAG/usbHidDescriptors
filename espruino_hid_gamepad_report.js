@@ -48,7 +48,6 @@ E.setUSBHID({
   0x05,   0x01,                    // USAGE_PAGE (Generic Desktop)
   0x09,   0x05,                    // USAGE (Game Pad) - Hut1_12v2.pdf p28 of 128
   0xA1,   0x01,                    // COLLECTION (Application)
-  0x09,   0x01,                    //   USAGE (Pointer)
 
   0xA1,   0x00,                    //   COLLECTION (Physical)
   0x05,   0x09,                    //     USAGE_PAGE (Button)
