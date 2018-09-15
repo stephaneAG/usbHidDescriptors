@@ -1,11 +1,21 @@
-/* Copyright (c) 2018 Stephane Adam Garnier, SeedsDesign. See the file LICENSE for copying permission. 
+/* Copyright (c) 2018 Stephane Adam Garnier, SeedsDesign. See the file LICENSE for copying permission.
+
+    == Espruino GamePad v0.1a ==
 
     R: this module is in huge wip ( it 'll soon include a wrapper to ease pressing/releasing btns & moving joysticks .. )
 
 */
-/* 
+/*
 ```
-var gamepad = require("USBGamepad");
+// load from official Espruino repos ( soon ? ^^ )
+//var gamepad = require("USBGamepad");
+// or pull it from my messy stuff
+var gamepad = require("https://github.com/stephaneAG/usbHidDescriptors/raw/master/espruino_hid_gamepad_report.js");
+
+// most basic usage:
+// using http://html5gamepad.com/, the controller shows up with the following(s)
+gamepad.sendGamepadState(0b1111111111111111, 127, 127, 127, 127);
+gamepad.sendGamepadState(0b1111111111111111, -127, -127, -127, -127);
 
 setWatch(function() {
   gamepad.sendGamepadState({buttonsByte: , ljoyX: [, ..]}, function(){
@@ -66,7 +76,7 @@ E.setUSBHID({
   0x09,   0x31,                    //     USAGE (Y)
   0x09,   0x32,                    //     USAGE (Z) - Hut1_12v2.pdf p26 = represents R X-axis
   0x09,   0x33,                    //     USAGE (Rx) - Hut1_12v2.pdf p26 = represents R Y-axis
-    
+
   0x15,   0x81,                    //     LOGICAL_MINIMUM (-127)
   0x25,   0x7F,                    //     LOGICAL_MAXIMUM (127)
   0x75,   0x08,                    //     REPORT_SIZE (8)
@@ -74,20 +84,20 @@ E.setUSBHID({
 
   0x81,   0x06,                    //     INPUT (Data,Var,Abs) - absolute for joysticks ( != rel for mouse )
   0xC0,                            //   END_COLLECTION
-  
+
   0xc0 ]                           // END_COLLECTION
 });
 
 
 exports.BUTTONS = {
-  START:      0x0001, // 
-  SELECT:     0x0002, // 
-  
-  PAD_UP:     0x0004, // 
+  START:      0x0001, //
+  SELECT:     0x0002, //
+
+  PAD_UP:     0x0004, //
   PAD_DOWN:   0x0008, //
   PAD_LEFT:   0x0010, //
   PAD_RIGHT:  0x0020, //
-  
+
   Y:          0x0040, //
   YELLOW:     0x0040, //
   A:          0x0080, //
@@ -96,13 +106,13 @@ exports.BUTTONS = {
   BLUE:       0x0100, //
   B:          0x0200, //
   RED:        0x0200, //
-  
+
   L1:         0x0400, //
   R1:         0x0800, //
-  
+
   L2:         0x1000, //
   R2:         0x2000, //
-  
+
   L3:         0x4000, //
   R3:         0x8000, //
 };
@@ -126,7 +136,7 @@ exports.sendGamepadState = function(btnState, x1, y1, x2, y2){
     //0x06,                 // bLength
     //0x01,                 // bDescriptorType - constant ( String assigned by USB )
     btnState & 0xFF,      // Byte0
-    (btnState>>8) & 0xFF, // Byte1   
+    (btnState>>8) & 0xFF, // Byte1
     x1,                   // Byte2
     y1,                   // Byte3
     x2,                   // Byte4
