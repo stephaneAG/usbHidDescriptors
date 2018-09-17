@@ -6,7 +6,7 @@
 Usage:
   var gamepad = require("ble_hid_gamepad");
   NRF.setServices(undefined, { hid : gamepad.report });
-  controls.sendGamepadState(0b1111111111111111, 127, -127, 127, -127);
+  gamepad.sendGamepadState(0b1111111111111111, 127, -127, 127, -127);
 */
 // http://www.usb.org/developers/hidpage/Hut1_12v2.pdf
 exports.report = new Uint8Array([
