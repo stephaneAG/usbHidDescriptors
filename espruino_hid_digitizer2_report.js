@@ -140,7 +140,7 @@ console.log( '0b' + (num | tipSwitch | (barrelSwith << 1) | (erasureSwitch << 2)
 exports.sendState = function(tipSwitch, barrelSwitch, erasureSwitch, invert, inRange, x, y, tipPressure, xTilt, yTilt){
   E.sendUSBHID([
     0x01,          // byte 0: report ID
-    0b00010001,    // byte 1: contains bit fields: tip sitch active, no barel switch, no erasure switch, not inverting, in range, remaining padding bits --> TODO: set/unset n bytes from args ;)
+    //0b00010001,    // byte 1: contains bit fields: tip sitch active, no barel switch, no erasure switch, not inverting, in range, remaining padding bits --> TODO: set/unset n bytes from args ;)
     tipSwitch|barrelSwith<<1|erasureSwitch<<2|inverting<<3|inRange<<4,
     0x00,          // byte 2: padding byte
     x & 0xFF,      // byte 3: contact point X low byte ( LSB value )
