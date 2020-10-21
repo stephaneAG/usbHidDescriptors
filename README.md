@@ -141,3 +141,36 @@ from HID1_11.pdf
 | Bit 7    | Reserved (0)                             |
 | Bit 8    | {Bit Field (0) \| Buffered Bytes (1)}     |
 | Bit 31-9 | Reserved (0)                             |
+
+## using 'HIDDescriptorTool' & 'DTImport'
+
+The main reason for using 'HID Descriptor Tool' is NOT its unfriendly interface but its parser error checking capability
+The mail goal is to validate 'manually/externally' written descriptors ( as C struct & via/thx to the author of DTImporter )
+
+If the error parsing step could be implemented in a user-friendlier too, we'd be almost free ;p
+R: the error parsing procedure is described at https://usb.org/sites/default/files/hidpar.pdf
+
+Sadly, the 'usage pages' at http://www.freebsddiary.org/APC/usb_hid_usages.php or those present in the .upg files shipped with Dt ( HID Descript Tool ) or found in the 'USB2CV' lib ( available at https://www.usb.org/document-library/usb20cv-x64-bit ) ( as pointed by the author of DTImporter, thx ;) https://github.com/jdunne525/DTImporter ) are not up-to-date :/
+
+Another way to put it, is a dev won't be able to build a .hid descriptor file via the descriptor tool if the device to be described involves 'too recent' constants, that won't be present in the .upg files & hence not available/displayed/clickable in the program's menu ( the left column )
+
+To update those, we have 2 options:
+- the 1st is to digg through all proposals & check what has been added ad which date & determine those to 'manually parse'
+- the 2nd is to get the latest 'hut' ( as I write these lines, the 1.2 version ) and to copy/paste & reformat correctly 'somehow' the constant that have been added to the correct .upg file
+
+Ex: I'm mainly concerned about the 'digitizers'
+- at the folloing link, we can find the proposals: https://www.usb.org/hid
+- ex of 2 of these where additional constants are mentionned: https://www.usb.org/sites/default/files/touch_digitizers_2_0.pdf & https://www.usb.org/sites/default/files/hutrr34.pdf
+-luckily, at https://usb.org/sites/default/files/hut1_2.pdf, we can scroll to the 'digitizer' page ( 0x0D, p161 ) & get all the constants we need to update the 'digit.upg' file ;p
+
+Once the .upg file(s) have been updated in this way, there should be no more troubles in adding what we want where we want in a descriptor being built via HID Descriptor tool, and we may also correctly parse descriptors imported via DTImport to benefit from the error parsing capability: nice ;)
+
+Good luck
+
+ALso: if running into errors when trying to run the tool ( ex: comdlg32.ocx missing & cie ), do the following ( I did this with success on a x64 Windaube 7 laptop ):
+- copy http://dechily.org/downloads/System.zip file content within C:\Windows\SysWOW64 ( or C:\Windows\system32 if on a 32 bit OS )
+- then cd to either dir & issue ' regsvr32 comctl32.ocx' from the dir
+
+Possibly useful too(s)
+- https://github.com/beantowel/HID_Descriptor_tool ?
+- <some tool that provided inout report will build an entire descriptor from that> ?
